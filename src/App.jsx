@@ -54,7 +54,7 @@ useEffect(() => {
 
 
  setresultado(35.86 * valorPropiedad * valorUbicacion * m2)
- guardarenhistorial()
+
  }
 
 
@@ -123,7 +123,7 @@ useEffect(() => {
   </div>
 
     <div className="center separador">
-<p className="importe">Precio estimado: $ <span id="valorPoliza">{resultado}</span><span className="guardar" title="Guardar en historial">💾</span></p>
+<p className="importe">Precio estimado: $ <span id="valorPoliza">{resultado}</span><span className="guardar" title="Guardar en historial" onClick={ guardarenhistorial()}>💾</span></p>
   </div>
 
     
