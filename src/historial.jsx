@@ -1,10 +1,47 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App2 from './App2.jsx'
-import './historial.css'
+import { useState, useEffect } from 'react'
+import './App.css'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 
-ReactDOM.createRoot(document.getElementById('root2')).render(
-  <React.StrictMode>
-    <App2 />
-  </React.StrictMode>,
-)
+function Historial() {
+    const historialCotizaciones = JSON.parse(localStorage.getItem("historialCotizaciones")) || []
+    console.log(historialCotizaciones);
+
+
+
+    return (
+        <>
+            <h1 className="center separador">Ver Historial 📋</h1>
+    <div className=" center div-cotizador">
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha de cotización</th>
+                    <th>Propiedad</th>
+                    <th>Ubicación</th>
+                    <th>Metros cuadrados</th>
+                    <th>Póliza mensual</th>
+                </tr>
+            </thead>
+            <tbody>
+                {historialCotizaciones.map(elemento=>{
+            return(<tr>
+                <td>{elemento.fechaCotizacion}</td>
+                <td>{elemento.propiedad}</td>
+                <td>{elemento.ubicacion}</td>
+                <td>{elemento.metrosCuadrados}</td>
+                <td>{elemento.poliza}</td>
+                </tr>
+            )
+          })}
+                    
+            </tbody>
+        </table>
+        <div className="center separador">
+            <Link to="/"><button className="button button-outline">VOLVER</button></Link>
+        </div>
+    </div>
+        </>
+    )
+}
+
+export default Historial

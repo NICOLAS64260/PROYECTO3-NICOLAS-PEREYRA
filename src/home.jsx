@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
-import Home from './home.jsx'
-import Historial from './historial.jsx'
 
-function App() {
+function Home() {
 
 const [opcion1, setopcion1]= useState([])//aqui se guardara el array para el select 1
 const [opcion2, setopcion2]= useState([])//aqui se guardara el array para el select 2
@@ -41,7 +39,9 @@ useEffect(() => {
 //  funcion cotizar
 //  aca le paso a la funcion los 3 valores alejidos en los select y los multiplico entre si para obtener el valor de la cotizacion
  const cotizar = () =>{
-
+  console.log(eleccionPropiedad)
+  console.log(eleccionUbicacion)
+  console.log(m2)
 
   //busco el dato que me dio el evento que me dice que eleccion esta señalada en el select de propiedad
   const valorPropiedad = datos.find(
@@ -66,7 +66,7 @@ useEffect(() => {
                       metrosCuadrados: m2,
                       poliza:          resultado
                     }
-
+  console.log(cotizacion)
 
   const historialCotizaciones = JSON.parse(localStorage.getItem("historialCotizaciones")) || []
           historialCotizaciones.push(cotizacion)
@@ -77,15 +77,58 @@ useEffect(() => {
   return (
     <>
 
-<BrowserRouter>
+    <div id='history' className="historial">
+      <Link to='/historial'><span title="Ver Historial">📋</span></Link>
+      {/* <a href="historial.html"><span title="Ver Historial">📋</span></a> */}
+    </div>
 
-      <Routes>
-        <Route path='/' exact element={ <Home />}/>
-        <Route path='/historial' element={ <Historial />}/>
-    </Routes>
-</BrowserRouter>
+    <h1 className="center separador">Seguros del hogar 🏡</h1>
+
+
+
+    <h2 className="center separador">Completa los datos solicitados</h2>
+
+
+
+    <div>
+      <label htmlFor="propiedad">Selecciona el tipo de propiedad</label>
+        <select onChange={(e) => setEleccionPropiedad(e.target.value)}>
+          <option value="">Seleccion tu propiedad</option>
+          {opcion1.map((ciudad)=>(
+            <option key={ciudad} value={ciudad}>
+              {ciudad}</option>
+          ))}
+        </select>
+    </div>
+
+
+
+     <div>
+      <label htmlFor="ubicacion">Selecciona su ubicacion</label>
+          <select onChange={(e) => setEleccionUbicacion(e.target.value)}>
+          <option value="">Selecciona ubicacion</option>
+          {opcion2.map(elemento=>{
+            return(<option key={elemento} value={elemento}>{elemento}</option>)
+          })}
+          </select>
+    </div> 
+
+
+
+    <div>
+    <label htmlFor="metros2">Ingresa los Metros cuadrados:</label>
+      <input type="number" id="metros2" defaultValue="20" min="20" max="500" required onChange={(e) => setm2(parseInt(e.target.value))} />
+  </div>
+
+  <div className="center separador">
+        <button className="button button-outline" onClick={cotizar}>Cotizar</button>
+  </div>
+
+    <div className="center separador">
+      <p className="importe">Precio estimado: $ <span id="valorPoliza">{resultado}</span><span className="guardar" title="Guardar en historial" onClick={ guardarenhistorial()}>💾</span></p>
+    </div>
     </>
   )
 }
 
-export default App
+export default Home
