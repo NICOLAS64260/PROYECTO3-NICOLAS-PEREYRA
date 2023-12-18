@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import Swal from "sweetalert";
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 
 function Home() {
@@ -51,10 +52,17 @@ useEffect(() => {
   const valorUbicacion = datos.find(
     (d)=> d.categoria === "ubicacion" && d.tipo === eleccionUbicacion)?.factor;
 
+    if (m2 < 20 || m2 > 500 || eleccionPropiedad === "" || eleccionUbicacion === "") {
+      Swal({
+        icon: "error",
+        title: "Error de datos Ingresados",
+        text: "Seleccione Tipo, Ubicación y m2 entre 20 y 500!",
+      });
+      return;
+    }
+    setresultado(35.86 * valorPropiedad * valorUbicacion * m2);
+  };
 
- setresultado(35.86 * valorPropiedad * valorUbicacion * m2)
-
- }
 
 
  //esta funcion crea un objeto con los datos de la cotizacion y lo pushea al array en el local storage
