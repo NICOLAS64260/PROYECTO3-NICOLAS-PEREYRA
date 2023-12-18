@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 
 function Historial() {
     const historialCotizaciones = JSON.parse(localStorage.getItem("historialCotizaciones")) || []
-    console.log(historialCotizaciones);
 
 
 

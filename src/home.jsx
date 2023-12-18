@@ -52,6 +52,8 @@ useEffect(() => {
   const valorUbicacion = datos.find(
     (d)=> d.categoria === "ubicacion" && d.tipo === eleccionUbicacion)?.factor;
 
+
+  //estructura de control. en el caso de que no se cumplan las condiciones la alerta se muestra atravez de la dependencia instalada de sweetaler! :D
     if (m2 < 20 || m2 > 500 || eleccionPropiedad === "" || eleccionUbicacion === "") {
       Swal({
         icon: "error",
@@ -67,6 +69,7 @@ useEffect(() => {
 
  //esta funcion crea un objeto con los datos de la cotizacion y lo pushea al array en el local storage
  const guardarenhistorial = ()=>{
+  if (resultado !== 0) {
   const cotizacion = {
                       fechaCotizacion: new Date().toLocaleString(),
                       propiedad:       eleccionPropiedad,
@@ -74,13 +77,13 @@ useEffect(() => {
                       metrosCuadrados: m2,
                       poliza:          resultado
                     }
-  console.log(cotizacion)
+  console.log("se ejecuto")
 
   const historialCotizaciones = JSON.parse(localStorage.getItem("historialCotizaciones")) || []
           historialCotizaciones.push(cotizacion)
           localStorage.setItem("historialCotizaciones", JSON.stringify(historialCotizaciones))
 
- }
+ }}
 
   return (
     <>
@@ -133,7 +136,10 @@ useEffect(() => {
   </div>
 
     <div className="center separador">
-      <p className="importe">Precio estimado: $ <span id="valorPoliza">{resultado}</span><span className="guardar" title="Guardar en historial" onClick={ guardarenhistorial()}>💾</span></p>
+      <p className="importe">Precio estimado: $ 
+        <span id="valorPoliza">{resultado}</span>
+        <span className="guardar" title="Guardar en historial" onClick={guardarenhistorial}>💾</span>
+      </p>
     </div>
     </>
   )
